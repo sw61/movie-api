@@ -1,14 +1,14 @@
 import styled from "styled-components";
-import PageButton from "./PageButton";
-const MovieCards = ({ imgUrl, title, runTime, year, page }) => {
+
+const MovieCards = ({ imgUrl, title, runTime, year }) => {
   return (
     <>
       <MovieContainer>
         <ImgBox src={imgUrl}></ImgBox>
         <TextContainer>
-          <TextBox>{title}</TextBox>
-          <TextBox>{runTime}</TextBox>
-          <TextBox>{year}</TextBox>
+          <TextBox>Title - {title}</TextBox>
+          <TextBox>RunTime - {runTime}m</TextBox>
+          <TextBox>Release Year - {year}</TextBox>
         </TextContainer>
       </MovieContainer>
     </>
@@ -26,6 +26,7 @@ const ImgBox = styled.img`
   width: 210px;
   height: 315px;
   margin-bottom: 5px;
+  overflow: hidden;
 `;
 const TextContainer = styled.div`
   display: flex;

@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { IoMdArrowDropdownCircle, IoMdArrowDropupCircle } from "react-icons/io";
 
-const LimitMenu = ({ setLimit, limitNum }) => {
+const LimitMenu = ({ setLimit, setPage, limitNum }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropClick = () => {
     setIsOpen(!isOpen);
@@ -26,7 +26,11 @@ const LimitMenu = ({ setLimit, limitNum }) => {
               limitNum.map((limitItem) => (
                 <BtnBox
                   key={limitItem.id}
-                  onClick={() => setLimit(limitItem.limit)}
+                  onClick={() => {
+                    setLimit(limitItem.limit);
+                    setPage(1);
+                    dropClick();
+                  }}
                 >
                   {limitItem.limit}
                 </BtnBox>

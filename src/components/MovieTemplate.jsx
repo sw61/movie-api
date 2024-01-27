@@ -14,18 +14,19 @@ import LimitMenu from "./LimitMenu";
 const MovieTemplate = () => {
   const [movieList, setMovieList] = useState([]);
   const [limit, setLimit] = useState(20);
+  const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState();
   const [limitNum, setLimitNum] = useState([
     {
       id: 1,
-      limit: "Page per 10",
+      limit: "10",
     },
-    { id: 2, limit: "Page per 20" },
-    { id: 3, limit: "Page per 30" },
-    { id: 3, limit: "Page per 40" },
-    { id: 3, limit: "Page per 50" },
+    { id: 2, limit: "20" },
+    { id: 3, limit: "30" },
+    { id: 3, limit: "40" },
+    { id: 3, limit: "50" },
   ]);
 
-  const [page, setPage] = useState(1);
   const getMovieList = async () => {
     const data = await axios.get("https://yts.mx/api/v2/list_movies.json", {
       params: {
@@ -34,15 +35,13 @@ const MovieTemplate = () => {
       },
     });
     console.log(data);
-
     setMovieList(data.data.data.movies);
     setPage(data.data.data.page_number);
     setLimit(data.data.data.limit);
+    setLastPage(data.data.data.movie_count);
   };
 
-  const maxPage = () => {
-    return Math.floor(58525 / limit + 1);
-  };
+  const maxPage = Math.floor(lastPage / limit + 1);
 
   useEffect(() => {
     getMovieList();
@@ -50,7 +49,7 @@ const MovieTemplate = () => {
 
   return (
     <>
-      <LimitMenu setLimit={setLimit} limitNum={limitNum} />
+      <LimitMenu setLimit={setLimit} setPage={setPage} limitNum={limitNum} />
       <MainContainer>
         <MovieList key={movieList.id} movieList={movieList} />
       </MainContainer>
@@ -67,7 +66,7 @@ const MovieTemplate = () => {
         <PageNum>{page}</PageNum>
         <MdOutlineKeyboardArrowRight
           className="plusBtn"
-          onClick={() => setPage(page + 1)}
+          onClick={() => setPage(page < maxPage ? page + 1 : page)}
         />
 
         <MdOutlineKeyboardDoubleArrowRight
@@ -83,7 +82,7 @@ export default MovieTemplate;
 const MainContainer = styled.div`
   display: flex;
   justify-content: center;
-  padding: 0 320px;
+  padding: 0 300px;
   padding-top: 50px;
   margin: 0 auto;
   flex-wrap: wrap;

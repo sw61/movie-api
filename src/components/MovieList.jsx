@@ -5,6 +5,7 @@ const MovieList = ({ movieList }) => {
     <>
       {movieList.map((movieList) => (
         <MovieCards
+          id={movieList.id}
           imgUrl={movieList.medium_cover_image}
           title={movieList.title}
           runTime={movieList.runtime}

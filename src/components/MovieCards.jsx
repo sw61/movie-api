@@ -1,12 +1,26 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const MovieCards = ({ imgUrl, title, runTime, year, rate, genre, detail }) => {
+const MovieCards = ({
+  id,
+  imgUrl,
+  title,
+  runTime,
+  year,
+  rate,
+  genre,
+  detail,
+}) => {
   const [hover, setHover] = useState(false);
+  const navigate = useNavigate();
+  const moveDetailPage = () => {
+    navigate(`/detail/${id}`);
+  };
 
   return (
     <>
-      <MovieContainer className="movie">
+      <MovieContainer onClick={moveDetailPage} className="movie">
         <ImgBox
           onMouseUp={() => setHover(true)}
           onMouseDown={() => setHover(false)}
